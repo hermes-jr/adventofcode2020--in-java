@@ -9,34 +9,45 @@ public class Level01 extends Level {
     public Level01(String filename) {
         int sum = 2020;
 
-        List<Integer> data = readResources(filename).stream().map(Integer::parseInt).collect(Collectors.toList());
-        int[] seen = new int[sum + 1];
+        List<Integer> data = readResources(filename)
+                .stream()
+                .map(Integer::parseInt)
+                .sorted()
+                .collect(Collectors.toList());
 
-        for (Integer i : data) {
-            if (i >= 0 && i <= sum) {
-                seen[i]++;
-            }
-        }
-
-        for (Integer cmp : data) {
-            if (seen[sum - cmp] > 0) {
-                System.out.println("Result1: " + cmp * (sum - cmp));
+        for (int i = 0, j = data.size() - 1; i < j; ) {
+            Integer v1 = data.get(i);
+            Integer v2 = data.get(j);
+            if (v1 + v2 < sum) {
+                i++;
+            } else if (v1 + v2 > sum) {
+                j--;
+            } else {
+                System.out.println("Result1: " + v1 * v2);
                 break;
             }
         }
 
         outer:
-        for (Integer term0 : data) {
-            int subSum = sum - term0;
-            // Find the other two compounds
-            for (Integer cmp : data) {
-                if (subSum - cmp >= 0 && !term0.equals(cmp) && seen[subSum - cmp] > 0) {
-                    System.out.println("Result2: " + term0 * cmp * (subSum - cmp));
+        for (int i = 0; i < data.size(); i++) {
+            Integer v1 = data.get(i);
+
+            int j = i + 1;
+            int k = data.size() - 1;
+            while (j < k) {
+                Integer v2 = data.get(j);
+                Integer v3 = data.get(k);
+                int cs = v1 + v2 + v3;
+                if (cs < sum) {
+                    j++;
+                } else if (cs > sum) {
+                    k--;
+                } else {
+                    System.out.println("Result2: " + v1 * v2 * v3);
                     break outer;
                 }
             }
         }
-
     }
 
     public static void main(String[] args) {
