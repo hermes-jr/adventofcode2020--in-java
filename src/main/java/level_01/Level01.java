@@ -23,7 +23,7 @@ public class Level01 extends Level {
             } else if (v1 + v2 > sum) {
                 j--;
             } else {
-                System.out.println("Result1: " + v1 * v2);
+                System.out.println("Part1: " + v1 * v2);
                 break;
             }
         }
@@ -43,7 +43,7 @@ public class Level01 extends Level {
                 } else if (cs > sum) {
                     k--;
                 } else {
-                    System.out.println("Result2: " + v1 * v2 * v3);
+                    System.out.println("Part2: " + v1 * v2 * v3);
                     break outer;
                 }
             }

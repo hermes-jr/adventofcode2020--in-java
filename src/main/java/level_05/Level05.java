@@ -18,7 +18,7 @@ public class Level05 extends Level {
             asNums.add(asInt);
         }
         Collections.sort(asNums);
-        System.out.println("Result1: " + asNums.get(asNums.size() - 1));
+        System.out.println("Part1: " + asNums.get(asNums.size() - 1));
 
         int mySeat = -1;
         for (int i = 1; i < asNums.size(); i++) {
@@ -28,7 +28,7 @@ public class Level05 extends Level {
                 break;
             }
         }
-        System.out.println("Result2: " + mySeat);
+        System.out.println("Part2: " + mySeat);
     }
 
     Integer toInt(String in) {

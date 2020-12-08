@@ -13,9 +13,6 @@ public class Level04 extends Level {
     private static final boolean VERBOSE = false;
 
     public Level04() {
-        List<String> rawPassports = getCleanedUpInput("input");
-        System.out.println("Result1: " + p1(rawPassports));
-        System.out.println("Result2: " + p2(rawPassports));
     }
 
     int p1(List<String> rawPassports) {
@@ -57,7 +54,10 @@ public class Level04 extends Level {
 
 
     public static void main(String[] args) {
-        new Level04();
+        Level04 l = new Level04();
+        List<String> rawPassports = l.getCleanedUpInput("input");
+        System.out.println("Part1: " + l.p1(rawPassports));
+        System.out.println("Part2: " + l.p2(rawPassports));
     }
 
     @Data

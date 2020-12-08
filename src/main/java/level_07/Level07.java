@@ -101,7 +101,7 @@ public class Level07 {
         Level07 l = new Level07();
         SimpleDirectedWeightedGraph<String, DefaultEdge> g = l.readResources("input");
 
-        System.out.println("Result1: " + l.p1(g));
-        System.out.println("Result2: " + l.p2(g));
+        System.out.println("Part1: " + l.p1(g));
+        System.out.println("Part2: " + l.p2(g));
     }
 }

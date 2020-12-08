@@ -42,8 +42,8 @@ public class Level06 extends Level {
             }
         }
 
-        System.out.println("Result1: " + result1);
-        System.out.println("Result2: " + result2);
+        System.out.println("Part1: " + result1);
+        System.out.println("Part2: " + result2);
 
     }
 

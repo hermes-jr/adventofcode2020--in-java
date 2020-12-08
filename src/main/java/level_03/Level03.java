@@ -22,8 +22,6 @@ public class Level03 extends Level {
             }
             mapAsBits.add(cbs);
         }
-        System.out.println("Result1: " + p1(3, 1));
-        System.out.println("Result2: " + p2());
     }
 
     public int p1(int dx, int dy) {
@@ -41,8 +39,10 @@ public class Level03 extends Level {
         return ((long) p1(1, 1)) * p1(3, 1) * p1(5, 1) * p1(7, 1) * p1(1, 2);
     }
 
-
     public static void main(String[] args) {
-        new Level03("input");
+        Level03 l = new Level03("input");
+
+        System.out.println("Part1: " + l.p1(3, 1));
+        System.out.println("Part2: " + l.p2());
     }
 }
