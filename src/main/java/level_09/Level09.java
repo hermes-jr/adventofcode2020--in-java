@@ -2,10 +2,7 @@ package level_09;
 
 import common.Level;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.LongSummaryStatistics;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Level09 extends Level {
@@ -33,13 +30,22 @@ public class Level09 extends Level {
         return -1L;
     }
 
-    // Takes less than 300ms, too lazy to optimize
     public Long p2(List<Long> list, Long tgtSum) {
+        List<Long> prefixes = new ArrayList<>(list.size());
+        Long pSum = 0L;
+        for (Long aLong : list) {
+            pSum += aLong;
+            prefixes.add(pSum);
+        }
+
         for (int preambleLength = list.size(); preambleLength >= 2; preambleLength--) {
+            ml:
             for (int i = 0; i < list.size() - preambleLength + 1; i++) {
-                Long sum = 0L;
                 for (int j = i; j < i + preambleLength; j++) {
-                    sum += list.get(j);
+                    Long sum = prefixes.get(j) - prefixes.get(i);
+                    if (sum.compareTo(tgtSum) > 0) {
+                        continue ml;
+                    }
                     if (sum.equals(tgtSum)) {
                         if (VERBOSE) System.out.println(sum + " i=" + i + " j=" + j);
                         if (VERBOSE) System.out.println("[i]=" + list.get(i) + " [j]=" + list.get(j));
