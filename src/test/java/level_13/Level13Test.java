@@ -16,7 +16,7 @@ class Level13Test {
         assertThat(l.p1()).isEqualTo(295L);
     }
 
-    @ParameterizedTest(name = "Part teo examples should work")
+    @ParameterizedTest(name = "Part two examples should work")
     @CsvSource(value = {
             "in1;1068781",
             "in2;3417",
