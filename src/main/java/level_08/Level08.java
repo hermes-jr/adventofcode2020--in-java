@@ -1,8 +1,6 @@
 package level_08;
 
 import common.Level;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -75,10 +73,4 @@ public class Level08 extends Level {
         l.p2(in);
     }
 
-    @Data
-    @AllArgsConstructor
-    static class ProgResult {
-        int acc;
-        boolean infinite;
-    }
 }

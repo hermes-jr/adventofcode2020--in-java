@@ -1,6 +1,5 @@
 package level_04;
 
-import level_04.Level04.Passport;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
