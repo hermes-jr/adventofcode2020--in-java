@@ -1,6 +1,5 @@
 package level_19;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,7 +19,6 @@ class Level19Test {
         assertThat(l.p1()).isEqualTo(2);
     }
 
-    @Disabled
     @Test
     void partTwoExamplesShouldWork() {
         Level19 l = new Level19("in2");

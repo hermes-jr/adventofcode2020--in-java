@@ -60,18 +60,26 @@ public class Level19 extends Level {
         return result;
     }
 
-    /*
-    Seems like there's no support for recursive \g group references in this regex engine,
-    so I just generated the regex and ran in here:
-    https://regex101.com/r/0gFvnL/1
-     */
     int p2() {
         rules.put("8", " 42 +");
-        rules.put("11", "(?<yyy> 42 (\\g<yyy>)? 31 )");
+//        rules.put("11", "(?<yyy> 42 (\\k<yyy>){1,10} 31 )"); // doesn't work with java regex engine
+        StringBuilder rule11 = new StringBuilder("(?: ");
+        int reps = 5; // seems to be enough for my input
+        for (int i = 1; i < reps; i++) {
+            for (int j = 0; j < i; j++) {
+                rule11.append(" 42 ");
+            }
+            for (int j = 0; j < i; j++) {
+                rule11.append(" 31 ");
+            }
+            if (i < reps - 1) {
+                rule11.append("| ");
+            }
+        }
+        rule11.append(")");
+        rules.put("11", rule11.toString());
+
         String regex = rulesAsRegex();
-        if (VERBOSE) System.out.println(regex);
-        return -1;
-/*
         Pattern p = Pattern.compile(regex);
         int result = 0;
         for (String line : lines) {
@@ -80,7 +88,6 @@ public class Level19 extends Level {
             }
         }
         return result;
-*/
     }
 
     public static void main(String[] args) {
@@ -93,7 +100,7 @@ public class Level19 extends Level {
         if ("a".equals(in) || "b".equals(in)) {
             return in;
         }
-        StringBuilder sb = new StringBuilder("");
+        StringBuilder sb = new StringBuilder();
         for (String token : in.split(" ")) {
             if (StringUtils.isNumeric(token)) {
                 sb.append(dig(rules.get(token)));
