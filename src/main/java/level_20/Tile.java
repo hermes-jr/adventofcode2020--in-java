@@ -20,9 +20,9 @@ class Tile {
         this.tileId = tileId;
     }
 
-    void calcCompat() {
+    void refreshEdgesCache() {
         // top
-        edgesCompat[0] = ArrayUtils.clone(pixels[0]);  // TODO: probably unnecessary clone
+        edgesCompat[0] = ArrayUtils.clone(pixels[0]);
         edgesCompat[1] = ArrayUtils.clone(pixels[0]);
         ArrayUtils.reverse(edgesCompat[1]);
 
@@ -48,5 +48,13 @@ class Tile {
             }
         }
         return -1;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("Tile ");
+        sb.append(tileId).append(System.lineSeparator());
+        Level20.printMatrix(pixels, sb);
+        return sb.toString();
     }
 }

@@ -86,4 +86,5 @@ public class Level21 extends Level {
         System.out.println("Part1: " + l.p1());
         System.out.println("Part2: " + l.p2());
     }
+
 }
