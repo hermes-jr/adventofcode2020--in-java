@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Level20 extends Level {
-    static final boolean VERBOSE = true;
+    static final boolean VERBOSE = false;
     static final int TILE_SIDE = 10;
     List<Tile> knownTiles = new ArrayList<>();
 
@@ -36,8 +36,13 @@ public class Level20 extends Level {
             for (int j = i + 1; j < knownTiles.size(); j++) {
                 Tile t1 = knownTiles.get(i);
                 Tile t2 = knownTiles.get(j);
-                for (char[] ec : t1.edgesCompat) {
-                    if (t2.isCompatible(ec) != -1) {
+                for (int ecId = 0; ecId < t1.edgesCompat.length; ecId++) {
+                    char[] ec = t1.edgesCompat[ecId];
+                    int compatMode = t2.isCompatible(ec);
+                    if (compatMode != -1) {
+                        if (VERBOSE) {
+                            System.out.printf("%d in mode %d is compatible with %d in state %d%n", t1.tileId, ecId, t2.tileId, compatMode);
+                        }
                         seen.put(t1.tileId, seen.getOrDefault(t1.tileId, 0) + 1);
                         seen.put(t2.tileId, seen.getOrDefault(t2.tileId, 0) + 1);
                         continue jIter;
