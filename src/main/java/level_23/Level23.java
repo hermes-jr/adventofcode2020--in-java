@@ -5,17 +5,7 @@ import common.Level;
 public class Level23 extends Level {
     static final boolean VERBOSE = false;
 
-    String p1(String seed, int turns) {
-        CrabsRing ring = new CrabsRing();
-
-        if (VERBOSE) System.out.println(ring);
-
-        // test: 389125467
-        for (String c : seed.split("")) {
-            ring.add(new CrabsRing.Node(Integer.parseUnsignedInt(c)));
-        }
-        ring.head = ring.head.next; // Scroll back to first added number
-
+    private void play(int turns, CrabsRing ring) {
         for (int turn = 1; turn <= turns; turn++) {
             if (VERBOSE) System.out.printf("-- move %d --%n", turn);
             Integer destination = ring.head.value;
@@ -31,7 +21,7 @@ public class Level23 extends Level {
             do {
                 destination--;
                 if (destination == 0) {
-                    destination = 9;
+                    destination = ring.length + 3; // lol =_=
                 }
             } while (destination.equals(pick1.value) || destination.equals(pick2.value) || destination.equals(pick3.value));
             if (VERBOSE) System.out.println("Destination: " + destination);
@@ -42,14 +32,24 @@ public class Level23 extends Level {
             ring.head = tmpHead.next;
             if (VERBOSE) System.out.println("Move ends: " + ring + System.lineSeparator());
         }
+    }
+
+    String p1(String seed, int turns) {
+        CrabsRing ring = new CrabsRing();
+
+        if (VERBOSE) System.out.println(ring);
+
+        // test: 389125467
+        for (String c : seed.split("")) {
+            ring.add(new CrabsRing.Node(Integer.parseUnsignedInt(c)));
+        }
+        ring.head = ring.head.next; // Scroll back to first added number
+
+        play(turns, ring);
 
         StringBuilder result = new StringBuilder();
-        CrabsRing.Node n = ring.head;
-        while (!n.value.equals(1)) {
-            n = n.next;
-        }
-        n = n.next;
-        while (!n.value.equals(1)) {
+        CrabsRing.Node n = ring.lookup[0].next;
+        for (int i = 0; i < 8; i++) {
             result.append(n.value);
             n = n.next;
         }
@@ -61,38 +61,26 @@ public class Level23 extends Level {
 
         if (VERBOSE) System.out.println(ring);
 
+        int maxSoFar = 0;
         for (String c : seed.split("")) {
-            ring.add(new CrabsRing.Node(Integer.parseUnsignedInt(c)));
-        }
-        for (int i = 10; i <= 1_000_000; i++) {
-            ring.add(new CrabsRing.Node(i));
-        }
-        ring.head = ring.head.next; // Scroll back to first added number
-
-        for (int turn = 1; turn <= 10_000_000; turn++) {
-            Integer destination = ring.head.value;
-
-            CrabsRing.Node pick1 = ring.pick(ring.head.next);
-            CrabsRing.Node pick2 = ring.pick(ring.head.next);
-            CrabsRing.Node pick3 = ring.pick(ring.head.next);
-
-            do {
-                destination--;
-                if (destination == 0) {
-                    destination = 1_000_000;
-                }
-            } while (destination.equals(pick1.value) || destination.equals(pick2.value) || destination.equals(pick3.value));
-            CrabsRing.Node tmpHead = ring.head;
-            ring.add(pick1, destination);
-            ring.add(pick2);
-            ring.add(pick3);
-            ring.head = tmpHead.next;
+            int cv = Integer.parseUnsignedInt(c);
+            if (cv > maxSoFar) {
+                maxSoFar = cv;
+            }
+            ring.add(new CrabsRing.Node(cv));
         }
 
-        CrabsRing.Node n = ring.head;
-        while (!n.value.equals(1)) {
-            n = n.next;
+        while (ring.length < 1_000_000) {
+            ring.add(new CrabsRing.Node(++maxSoFar));
         }
+        ring.head = ring.head.next;
+
+        if (VERBOSE) System.out.println(ring);
+
+        play(10_000_000, ring);
+
+        CrabsRing.Node n = ring.lookup[0];
+
         return String.valueOf((long) n.next.value * (long) n.next.next.value);
     }
 

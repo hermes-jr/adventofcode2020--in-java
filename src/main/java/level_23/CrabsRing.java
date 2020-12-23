@@ -3,11 +3,12 @@ package level_23;
 import lombok.EqualsAndHashCode;
 
 class CrabsRing {
-    Node[] lookup = new Node[1_000_001];
+    Node[] lookup = new Node[1_000_000];
     Node head = null;
+    int length = 0;
 
     void add(Node n) {
-        lookup[n.value] = n;
+        lookup[n.value - 1] = n;
         if (head == null) {
             head = n;
         } else {
@@ -17,6 +18,7 @@ class CrabsRing {
             hn.prev = n;
             n.next = hn;
         }
+        length++;
         head = n;
     }
 
@@ -25,11 +27,12 @@ class CrabsRing {
         n.next.prev = n.prev;
         n.next = null;
         n.prev = null;
+        length--;
         return n;
     }
 
     public void add(Node value, Integer destination) {
-        head = lookup[destination];
+        head = lookup[destination - 1];
         add(value);
     }
 
