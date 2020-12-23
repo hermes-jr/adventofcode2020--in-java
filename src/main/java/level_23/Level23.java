@@ -8,7 +8,7 @@ public class Level23 extends Level {
     private void play(int turns, CrabsRing ring) {
         for (int turn = 1; turn <= turns; turn++) {
             if (VERBOSE) System.out.printf("-- move %d --%n", turn);
-            Integer destination = ring.head.value;
+            int destination = ring.head.value;
 
             CrabsRing.Node pick1 = ring.pick(ring.head.next);
             CrabsRing.Node pick2 = ring.pick(ring.head.next);
@@ -23,7 +23,7 @@ public class Level23 extends Level {
                 if (destination == 0) {
                     destination = ring.length + 3; // lol =_=
                 }
-            } while (destination.equals(pick1.value) || destination.equals(pick2.value) || destination.equals(pick3.value));
+            } while (destination == pick1.value || destination == pick2.value || destination == pick3.value);
             if (VERBOSE) System.out.println("Destination: " + destination);
             CrabsRing.Node tmpHead = ring.head;
             ring.add(pick1, destination);
@@ -35,7 +35,7 @@ public class Level23 extends Level {
     }
 
     String p1(String seed, int turns) {
-        CrabsRing ring = new CrabsRing();
+        CrabsRing ring = new CrabsRing(10);
 
         if (VERBOSE) System.out.println(ring);
 
@@ -48,7 +48,7 @@ public class Level23 extends Level {
         play(turns, ring);
 
         StringBuilder result = new StringBuilder();
-        CrabsRing.Node n = ring.lookup[0].next;
+        CrabsRing.Node n = ring.lookup[1].next;
         for (int i = 0; i < 8; i++) {
             result.append(n.value);
             n = n.next;
@@ -57,7 +57,7 @@ public class Level23 extends Level {
     }
 
     String p2(String seed) {
-        CrabsRing ring = new CrabsRing();
+        CrabsRing ring = new CrabsRing(1_000_000);
 
         if (VERBOSE) System.out.println(ring);
 
@@ -79,7 +79,7 @@ public class Level23 extends Level {
 
         play(10_000_000, ring);
 
-        CrabsRing.Node n = ring.lookup[0];
+        CrabsRing.Node n = ring.lookup[1];
 
         return String.valueOf((long) n.next.value * (long) n.next.next.value);
     }
